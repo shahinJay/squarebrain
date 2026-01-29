@@ -1,35 +1,52 @@
 import pygame
 pygame.init()
-
-screen = pygame.display.set_mode((800,500))
 running = True
+screen = pygame.display.set_mode((600, 600))
 
 clock = pygame.time.Clock()
 delta = 0.1
-x=100
-y=100
+a=101
+b=101
 moving_d = False
 moving_a = False
 moving_s = False
 moving_w = False
 
 while running:
-  screen.fill((255, 255, 255))
+  screen.fill((0, 0, 0))
   red = (255,0,0)
   green = (0,255,0)
   blue = (0,0,255)
 
   if moving_d:
-    x += 200 * delta
+    a += 200 * delta
   if moving_a:
-    x -= 200 * delta
+    a -= 200 * delta
   if moving_s:
-    y += 200 * delta
+    b += 200 * delta
   if moving_w:
-    y -= 200 * delta
+    b -= 200 * delta
 
-  pygame.draw.circle(screen, green, (x,y), 20)
-  pygame.draw.circle(screen, red, (600,400), 20)
+
+  grid_line_size = 1
+  grid_color = (255, 255, 255)
+  grid_size = 25
+
+  def draw_grid():
+    
+    for x in range(600):
+      if x%grid_size == 0:
+        pygame.draw.line(screen, grid_color, (x, 0), (x, 600), grid_line_size)
+    
+    for y in range(600):
+      if y%grid_size == 0:
+        pygame.draw.line(screen, grid_color, (0, y), (600, y), grid_line_size)
+
+
+
+  draw_grid()
+  pygame.draw.rect(screen, green, (a,b,24,24))
+  pygame.draw.rect(screen, red, (301,301,24,24))
   pygame.display.flip()
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
