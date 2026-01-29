@@ -2,7 +2,7 @@ import pygame
 
 pygame.init()
 
-screen = pygame.display.set_mode((1920,1920))
+screen = pygame.display.set_mode((1080,1080))
 running = True
 
 while running:
@@ -11,6 +11,3 @@ while running:
       running = False
 
 pygame.quit()
-
-
-
