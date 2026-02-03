@@ -35,18 +35,6 @@ while running:
   if keys[pygame.K_DOWN]:
     y += speed * delta_time
 
-  if x + size < 0:
-    x = 600
-
-  if x > 600:
-    x = 0
-  
-  if y + size < 0:
-    y = 600
-
-  if y > 600:
-    y = 0
-
   screen.fill((0,0,0))
   pygame.draw.rect(screen, (255,255,255), (x, y, size, size))  
     
