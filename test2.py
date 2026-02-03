@@ -1,5 +1,6 @@
 import pygame
 import random as rd
+from grid import grid
 
 pygame.init()
 running = True
@@ -11,6 +12,8 @@ screen = pygame.display.set_mode((size, size))
 clock = pygame.time.Clock()
 delta = 0.1
 
+myGrid = grid(screen, size, size)
+
 def randPosition():
    return int(64 * rd.randrange(8))
 
@@ -18,32 +21,20 @@ a=randPosition()
 b=a
 
 
-
 moving_d = False
 moving_a = False
 moving_s = False
 moving_w = False
 
-grid_line_size = 1
-grid_color = (255, 255, 255)
-def draw_grid():
-    
-    for x in range(size):
-      if x%cell_size == 0:
-        pygame.draw.line(screen, grid_color, (x, 0), (x, size), grid_line_size)
-    
-    for y in range(size):
-      if y%cell_size == 0:
-        pygame.draw.line(screen, grid_color, (0, y), (size, y), grid_line_size)
-
-
 
 while running:
   screen.fill((0, 0, 0))
-  draw_grid()
   red = (255,0,0)
   green = (0,255,0)
   blue = (0,0,255)
+
+  myGrid.draw_grid(cell_size=cell_size)
+
 
   if moving_d:
     a += 200 * delta
@@ -53,9 +44,6 @@ while running:
     b += 200 * delta
   if moving_w:
     b -= 200 * delta
-
-
-
 
 
   pygame.draw.rect(screen, red, (384,256,64,64))
