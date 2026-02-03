@@ -3,78 +3,81 @@ import random as rd
 from grid import grid
 
 pygame.init()
-
 running = True
-
 cell_size = 64
 cell_count=8
 size=cell_size*cell_count #screen Size
 screen = pygame.display.set_mode((size, size))
 
-clock = pygame.time.Clock()
-delta = 0.1
+grid_line_size = 1
+grid_color = (255, 255, 255)
 
-myGrid = grid(screen, size, size)
+playground = grid(screen = screen, disp_x=size, disp_y=size)
 
-def randPosition(): #RANDOM POSITIONS FOR PLAYER SQUARE
-  return int(64 * rd.randrange(8))
+x = 0
+y = 0
 
-a = randPosition()
-b = randPosition()
+gx = 5
+gy = 5
 
-moving_d = False
-moving_a = False
-moving_s = False
-moving_w = False
+goal_pos = (gx * cell_size, gy *cell_size)
 
+def randPosition():
+   return int(cell_size * rd.randrange(8))
 
+def spawn(x, y):
+  while(x != goal_pos[0] and y!= goal_pos[1]):
+    x = randPosition()
+    y = randPosition()
+  return x, y
+
+def nextPosition(move, currentX, currentY):
+  if move == "right":
+    currentX += cell_size
+  elif move == "left":
+    currentX -= cell_size
+  elif move == "up":
+    currentY += cell_size
+  elif move == "down":
+    currentY -= cell_size
+  return currentX, currentY
+
+def handle_input(event, x, y):
+  
+  move = "None"
+  
+  if event.key == pygame.K_d:
+      move = "right"
+  if event.key == pygame.K_a:
+      move = "left"
+  if event.key == pygame.K_s:
+      move = "up"
+  if event.key == pygame.K_w:
+      move = "down"
+  
+  x , y = nextPosition(move, x , y)
+  return x, y
+
+x, y = spawn(x, y)
+   
+#main function of loop
 while running:
   screen.fill((0, 0, 0))
+  playground.draw_grid(cell_size=cell_size)
   red = (255,0,0)
   green = (0,255,0)
   blue = (0,0,255)
+     
+  pygame.draw.rect(screen, red, (goal_pos[0], goal_pos[1], cell_size, cell_size))
+  pygame.draw.rect(screen, green, (x, y, cell_size, cell_size))
 
-  myGrid.draw_grid(cell_size=cell_size)
-
-  if moving_d:
-    a += 200 * delta
-  if moving_a:
-    a -= 200 * delta
-  if moving_s:
-    b += 200 * delta
-  if moving_w:
-    b -= 200 * delta
-
-
-  pygame.draw.rect(screen, red, (384,256,64,64))
-  pygame.draw.rect(screen, green, (a,b, 64, 64))
-  
-  pygame.display.flip()
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
-        running = False
-
+      running = False
     if event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_d:
-            moving_d = True
-        if event.key == pygame.K_a:
-            moving_a = True
-        if event.key == pygame.K_s:
-            moving_s = True
-        if event.key == pygame.K_w:
-            moving_w = True
+      x, y = handle_input(event, x, y) #HANDLE INPUTS
 
-    if event.type == pygame.KEYUP:
-        if event.key == pygame.K_d:
-            moving_d = False
-        if event.key == pygame.K_a:
-            moving_a = False
-        if event.key == pygame.K_s:
-            moving_s = False
-        if event.key == pygame.K_w:
-            moving_w = False
-
-  delta = clock.tick(60) / 1000
-  delta = max(0.001, min(0.1, delta))
+  pygame.display.flip()
+  
 
 pygame.quit()
