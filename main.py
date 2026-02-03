@@ -3,7 +3,9 @@ import random as rd
 from grid import grid
 
 pygame.init()
+
 running = True
+
 cell_size = 64
 cell_count=8
 size=cell_size*cell_count #screen Size
@@ -14,11 +16,11 @@ delta = 0.1
 
 myGrid = grid(screen, size, size)
 
-def randPosition():
-   return int(64 * rd.randrange(8))
+def randPosition(): #RANDOM POSITIONS FOR PLAYER SQUARE
+  return int(64 * rd.randrange(8))
 
-a=randPosition()
-b=a
+a = randPosition()
+b = randPosition()
 
 moving_d = False
 moving_a = False
@@ -33,7 +35,6 @@ while running:
   blue = (0,0,255)
 
   myGrid.draw_grid(cell_size=cell_size)
-
 
   if moving_d:
     a += 200 * delta
