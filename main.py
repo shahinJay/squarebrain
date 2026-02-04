@@ -6,7 +6,7 @@ pygame.init()
 running = True
 cell_size = 64
 cell_count=8
-size=cell_size*cell_count #screen Size
+size = cell_size*cell_count #screen Size
 screen = pygame.display.set_mode((size, size))
 
 grid_line_size = 1
@@ -14,8 +14,8 @@ grid_color = (255, 255, 255)
 
 playground = grid(screen = screen, disp_x=size, disp_y=size)
 
-x = 0
-y = 0
+x = 4
+y = 2
 
 gx = 5
 gy = 5
@@ -23,13 +23,15 @@ gy = 5
 goal_pos = (gx * cell_size, gy *cell_size)
 
 def randPosition():
-   return int(cell_size * rd.randrange(8))
+  return rd.randrange(8)
 
 def spawn(x, y):
-  while(x != goal_pos[0] and y!= goal_pos[1]):
+  if (x == gx and y == gy):
+    spawn(x, y)
+  else:
     x = randPosition()
     y = randPosition()
-  return x, y
+  return x * cell_size, y*cell_size
 
 def nextPosition(move, currentX, currentY):
   if move == "right":
@@ -67,7 +69,7 @@ while running:
   red = (255,0,0)
   green = (0,255,0)
   blue = (0,0,255)
-     
+    
   pygame.draw.rect(screen, red, (goal_pos[0], goal_pos[1], cell_size, cell_size))
   pygame.draw.rect(screen, green, (x, y, cell_size, cell_size))
 
