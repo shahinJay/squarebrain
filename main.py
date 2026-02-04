@@ -69,7 +69,7 @@ while running:
   red = (255,0,0)
   green = (0,255,0)
   blue = (0,0,255)
-     
+    
   pygame.draw.rect(screen, red, (goal_pos[0], goal_pos[1], cell_size, cell_size))
   pygame.draw.rect(screen, green, (x, y, cell_size, cell_size))
 
