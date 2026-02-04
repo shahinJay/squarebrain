@@ -45,7 +45,6 @@ def nextPosition(move, currentX, currentY):
   return currentX, currentY
 
 def handle_input(event, x, y):
-  
   move = "None"
   
   if event.key == pygame.K_d:
@@ -80,6 +79,5 @@ while running:
       x, y = handle_input(event, x, y) #HANDLE INPUTS
 
   pygame.display.flip()
-  
 
 pygame.quit()
